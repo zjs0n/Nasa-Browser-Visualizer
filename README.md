@@ -6,7 +6,9 @@ The following is a quick description of the site and how to use it.
 
 Download all the necessary files(all the filse must be in the correct folders).
 
-Go to cmd and type "node app.js" to run the webapp.
+Go to cmd and change the directory(cd) to the folder that contains app.js
+
+Type "node app.js" to run the webapp.
 
 On any browser(I used google chrome), type in localhost:8080.
 

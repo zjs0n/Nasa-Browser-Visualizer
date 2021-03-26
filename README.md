@@ -24,3 +24,5 @@ The "Delay Schedule" button is now changed to
 The JSON file contains all the launches and each launch's corresponding information such as the name of the rocket, the original scheduled launch date, 
 the new delayed launch date(if any), and the cost of delay for each day(if any). I used python to make the json file. The new delayed schedule is what I determined
 to be the one that minimizes the delay cost the most. 
+
+For this project, we were told that a launch cannot be rescheduled earlier than its initial launch date. I assumed that the Bear I launch on April 1st must be delayed to April 2nd and no other dates were allowed, so I set the new delayed scheduled around that. 

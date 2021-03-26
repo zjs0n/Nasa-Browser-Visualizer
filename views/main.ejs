@@ -1,0 +1,278 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Schedule Visualizer</title>
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+.table-style .today {background: #2A3F54; color: #ffffff;}
+.table-style th:nth-of-type(7),td:nth-of-type(7) {color: blue;}
+.table-style th:nth-of-type(1),td:nth-of-type(1) {color: red;}
+.table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
+.table-style {height: 900px; width: 1000px;}
+.Bear {background-color:aqua;}
+.Orca {background-color:gray;}
+.Moose {background-color: brown;}
+.Bumblebee {background-color: burlywood;}
+.Changed {background-color: crimson;}
+.hidden {
+  display: none;
+}
+td .popup {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  height: 100px;
+}
+td .popup:hover{
+  visibility: visible;
+}
+</style>
+<body>
+    <div class=" col-md-4 col-sm-12 well pull-right-lg" style="border:0px solid">
+        <p class="well" style="padding:10px; margin-bottom:2px;">
+          <span class="glyphicon glyphicon-calendar"></span>  Calendar
+        </p>
+        <button type="button" id = "changebutton" onclick="changedschedule()">Delay Schedule!</button>
+        <button type="button" id = "originalbutton" onclick="originalschedule()" class="hidden">Original Schedule!</button>
+        <div>
+          <p>The Bear launches are in <span style="color: cyan;"> RED</span></p>
+          <p>The Orca launches are in <span style="color:gray"> GRAY</span></p>
+          <p>The Moose launches are in <span style="color:brown"> BROWN</span></p>
+          <p>The Bumblebee launches are in <span style="color: burlywood;"> YELLOW</span></p>
+          <p> The changed scheduled launches are in <span style="color: crimson"> RED</span></p>
+          <p id = "minimizecost" style="float:inline-start;"></p>
+       </div>
+        <div class="col-md-12" style="padding:0px;">
+          <br>
+            <table class="table table-bordered table-style table-responsive" id="table">
+              <tr>
+                <th colspan="2"><a href="?ym=<?php echo $prev; ?>"><span class="glyphicon glyphicon-chevron-left"></span></a></th>
+                <th colspan="3"> April - 2021</th>
+                <th colspan="2"><a href="?ym=<?php echo $next; ?>"><span class="glyphicon glyphicon-chevron-right"></span></a></th>
+              </tr>
+              <tr>
+                <th>S</th>
+                <th>M</th>
+                <th>T</th>
+                <th>W</th>
+                <th>T</th>
+                <th>F</th>
+                <th>S</th>
+              </tr>
+              <tr>
+                <td id="1"></td>
+                <td id="2"></td>
+                <td id="3"></td>
+                <td id="4"></td>
+                <td id="5" onclick="showcost(event)">1</td>
+                <td id="6"onclick="showcost(event)">2</td>
+                <td id="7"onclick="showcost(event)">3</td>
+              </tr>
+              <tr>
+                <td id="8" onclick="showcost(event)">4</td>
+                <td id="9" onclick="showcost(event)">5</td>
+                <td id="10" onclick="showcost(event)">6</td>
+                <td id="11" onclick="showcost(event)">7</td>
+                <td id="12" onclick="showcost(event)">8</td>
+                <td id="13" onclick="showcost(event)">9</td>
+                <td id="14" onclick="showcost(event)">10</td>
+              </tr>
+              <tr>
+                <td id="15" onclick="showcost(event)">11</td>
+                <td id="16" onclick="showcost(event)">12</td>
+                <td id="17" onclick="showcost(event)">13</td>
+                <td id="18" onclick="showcost(event)">14</td>
+                <td id="19" onclick="showcost(event)">15</td>
+                <td id="20" onclick="showcost(event)">16</td>
+                <td id="21" onclick="showcost(event)">17</td>
+              </tr>
+               <tr>
+                <td id="22" onclick="showcost(event)">18</td>
+                <td id="23" onclick="showcost(event)">19</td>
+                <td id="24" onclick="showcost(event)">20</td>
+                <td id="25" onclick="showcost(event)">21</td>
+                <td id="26" onclick="showcost(event)">22</td>
+                <td id="27" onclick="showcost(event)">23</td>
+                <td id="28" onclick="showcost(event)">24</td>
+              </tr>
+                <tr>
+                <td id="29" onclick="showcost(event)">25</td>
+                <td id="30" onclick="showcost(event)">26</td>
+                <td id="31" onclick="showcost(event)">27</td>
+                <td>28</td>
+                <td>29</td>
+                <td>30</td>
+                <td></td>
+              </tr>
+            </table>
+    
+        </div>
+      </div>
+</body>
+
+<script>
+  var obj = {
+    "launches": [
+      {
+        "name": "Bear I",
+        "original_date": "April 1",
+        "changed_date": "April 2",
+        "move_cost": "2"
+      },
+      {
+        "name": "Orca I",
+        "original_date": "April 3",
+        "changed_date": "April 12",
+        "move_cost": "1"
+      },
+      {
+        "name": "Moose I",
+        "original_date": "April 5",
+        "changed_date": "April 5",
+        "move_cost": "7"
+      },
+      {
+        "name": "Bear II",
+        "original_date": "April 10",
+        "changed_date": "April 10",
+        "move_cost": "2"
+      },
+      {
+        "name": "Bumblebee I",
+        "original_date": "April 12",
+        "changed_date": "April 16",
+        "move_cost": "0.5"
+      },
+      {
+        "name": "Bumblebee II",
+        "original_date": "April 13",
+        "changed_date": "April 17",
+        "move_cost": "0.5"
+      },
+      {
+        "name": "Bumblebee III",
+        "original_date": "April 14",
+        "changed_date": "April 14",
+        "move_cost": "0.5"
+      },
+      {
+        "name": "Bumblebee IV",
+        "original_date": "April 15",
+        "changed_date": "April 15",
+        "move_cost": "0.5"
+      },
+      {
+        "name": "Orca II",
+        "original_date": "April 20",
+        "changed_date": "April 20",
+        "move_cost": "1"
+      },
+      {
+        "name": "Moose II",
+        "original_date": "April 23",
+        "changed_date": "April 23",
+        "move_cost": "7"
+      },
+      {
+        "name": "Bear III",
+        "original_date": "April 30",
+        "changed_date": "April 30",
+        "move_cost": "2"
+      }
+    ]
+  }
+  var changestate = false;
+  var jsondata = obj.launches
+  console.log(jsondata.length)
+  element = document.getElementById("1").innerHTML;
+  console.log(document.getElementsByTagName("td").item(0));
+  console.log(document.getElementById("1"));
+  var x = document.getElementById("table").getElementsByTagName("td");
+  console.log(x[30].id);
+  var idstring = String(x[1].id);
+  var cost = 0;
+
+  var i;
+  for (i = 0; i < jsondata.length; i++) {
+    var date = jsondata[i].original_date.split(" ")[1];
+    console.log(typeof(date))
+    console.log("date is: " + (parseInt(date) + 3))
+    x[(parseInt(date) + 3)].className = jsondata[i].name.split(" ")[0];
+    console.log( "innerHTML is: " + x[(parseInt(date) + 3)].innerHTML);
+  }
+
+  function originalschedule() {
+    for (i = 0; i < jsondata.length; i++) {
+    var original_date = jsondata[i].original_date.split(" ")[1];
+    var changed_date = jsondata[i].changed_date.split(" ")[1];
+    x[parseInt(original_date) + 3].className = jsondata[i].name.split(" ")[0];
+    if (changed_date - original_date != 0) {
+      x[parseInt(changed_date) + 3].className = ""
+    }
+    }
+    document.getElementById("changebutton").classList.remove("hidden");
+    document.getElementById("originalbutton").classList.add("hidden");
+    cost = 0;
+    document.getElementById("minimizecost").innerHTML = "";
+    changestate = false;
+
+  }
+  function changedschedule() {
+    for (i = jsondata.length - 1; i >= 0; i--) {
+    var original_date = jsondata[i].original_date.split(" ")[1];
+    var changed_date = jsondata[i].changed_date.split(" ")[1];
+    var costhere = jsondata[i].move_cost;
+
+    if (changed_date - original_date != 0) {
+      if (x[parseInt(changed_date) + 3].className == "Changed" ) {
+        continue;
+      } 
+      if (x[parseInt(original_date) + 3].className == "Changed") {
+        continue;
+      }else {
+        x[parseInt(original_date) + 3].className = "";
+        x[parseInt(changed_date) + 3].className = "Changed"
+        console.log("unique cost" + costhere);
+        cost+= (costhere * (changed_date - original_date))
+        console.log(cost);
+        innerSpan = document.createElement("span");
+        innerSpan.className = "popup"
+        innerSpan.innerHTML = jsondata[i].name + " has a delay of " +
+          parseInt(changed_date - original_date) + 
+          " day(s) and has a delay cost of $" +
+          costhere * (changed_date - original_date) + " in total";
+        x[parseInt(changed_date) + 3].appendChild(innerSpan);
+      }
+
+    }
+    
+    }
+    document.getElementById("changebutton").classList.add("hidden");
+    document.getElementById("originalbutton").classList.remove("hidden");
+    document.getElementById("minimizecost").innerHTML = "The TOTAL cost of changing schedule is " + cost + "."
+    changestate = true;
+  }
+  function showcost(event) {
+    if (changestate) {
+      alert(event.target.getElementsByClassName("popup")[0].firstChild.data);
+    console.log(event.target.getElementsByClassName("popup"));
+    }
+  }
+  </script>
+</html>

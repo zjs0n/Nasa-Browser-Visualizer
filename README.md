@@ -15,7 +15,8 @@ depending on the rocket launch that day. The legend key will be above the calend
 There is a button called "Delay Schedule" and you can press it so that the new delayed schedule will appear. You can then only click on the
 red dates to show which launches were delayed to their respective dates and how far delayed(in days) from original date
 and the total cost of delaying that launch to that day. Only the red dates will 
-have this feature as those launches were delayed to that day and necessary info must be given. The "Delay Schedule" button is now changed to 
+have this feature as those launches were delayed to that day and necessary info must be given. The total cost of the delayed schedule will also be shown, right below the legend key. 
+The "Delay Schedule" button is now changed to 
 "Original Schedule" button and can be pressed to return to the original schedule. 
 
 The JSON file contains all the launches and each launch's corresponding information such as the name of the rocket, the original scheduled launch date, 

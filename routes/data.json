@@ -1,0 +1,70 @@
+{
+  "launches": [
+    {
+      "name": "Bear I",
+      "original_date": "April 1",
+      "changed_date": "April 2",
+      "move_cost": "2"
+    },
+    {
+      "name": "Orca I",
+      "original_date": "April 3",
+      "changed_date": "April 12",
+      "move_cost": "1"
+    },
+    {
+      "name": "Moose I",
+      "original_date": "April 5",
+      "changed_date": "April 5",
+      "move_cost": "7"
+    },
+    {
+      "name": "Bear II",
+      "original_date": "April 10",
+      "changed_date": "April 10",
+      "move_cost": "2"
+    },
+    {
+      "name": "Bumblebee I",
+      "original_date": "April 12",
+      "changed_date": "April 16",
+      "move_cost": "0.5"
+    },
+    {
+      "name": "Bumblebee II",
+      "original_date": "April 13",
+      "changed_date": "April 17",
+      "move_cost": "0.5"
+    },
+    {
+      "name": "Bumblebee III",
+      "original_date": "April 14",
+      "changed_date": "April 14",
+      "move_cost": "0.5"
+    },
+    {
+      "name": "Bumblebee IV",
+      "original_date": "April 15",
+      "changed_date": "April 15",
+      "move_cost": "0.5"
+    },
+    {
+      "name": "Orca II",
+      "original_date": "April 20",
+      "changed_date": "April 20",
+      "move_cost": "1"
+    },
+    {
+      "name": "Moose II",
+      "original_date": "April 23",
+      "changed_date": "April 23",
+      "move_cost": "7"
+    },
+    {
+      "name": "Bear III",
+      "original_date": "April 30",
+      "changed_date": "April 30",
+      "move_cost": "2"
+    }
+  ]
+}
